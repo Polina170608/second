@@ -1,0 +1,49 @@
+import sys
+from random import randint
+from PyQt5.QtGui import QPainter, QColor
+from PyQt5.QtWidgets import QMainWindow, QApplication, QPushButton
+
+
+class Design(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.initUI()
+
+    def initUI(self):
+        self.resize(650, 420)
+        self.btn = QPushButton('Жми', self)
+        self.btn.move(50, 50)
+
+
+class Example(Design):
+    def __init__(self):
+        super().__init__()
+        self.flag = False
+        self.btn.clicked.connect(self.go_paint)
+
+    def go_paint(self):
+        self.qp = QPainter()
+        self.flag = True
+        self.update()
+
+    def paintEvent(self, event):
+        if self.flag:
+            self.qp.begin(self)
+            self.draw_flag(self.qp)
+            self.qp.end()
+        self.flag = False
+
+    def draw_flag(self, qp):
+        self.flag = True
+        R, G, B = randint(0, 255), randint(0, 255), randint(0, 255)
+        qp.setBrush(QColor(R, G, B))
+        x, y = randint(0, 790), randint(0, 590)
+        d = randint(10, 30)
+        qp.drawEllipse(x, y, d, d)
+
+
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    ex = Design()
+    ex.show()
+    sys.exit(app.exec())
