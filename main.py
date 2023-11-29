@@ -8,7 +8,7 @@ from PyQt5.QtWidgets import QMainWindow, QApplication
 class Example(QMainWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUI('UI.ui', self)
+        uic.loadUi('UI.ui', self)
         self.flag = False
         self.pushButton.clicked.connect(self.go_paint)
 
